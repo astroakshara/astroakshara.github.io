@@ -31,6 +31,22 @@
 		var $nav = $('#nav');
 
 		if ($nav.length > 0) {
+			var syncActiveNavItem = function($link) {
+				var $container = $nav.find('ul');
+
+				if (!$link || !$link.length || !$container.length)
+					return;
+
+				var container = $container.get(0),
+					link = $link.get(0);
+
+				if (!container || !link || container.scrollWidth <= container.clientWidth)
+					return;
+
+				var target = link.offsetLeft - ((container.clientWidth - link.offsetWidth) / 2);
+				target = Math.max(0, Math.min(target, container.scrollWidth - container.clientWidth));
+				container.scrollTo({ left: target, behavior: 'smooth' });
+			};
 
 			// Shrink effect.
 				$main
@@ -70,6 +86,8 @@
 								.addClass('active')
 								.addClass('active-locked');
 
+							syncActiveNavItem($this);
+
 					})
 					.each(function() {
 
@@ -101,6 +119,7 @@
 
 											$nav_a.removeClass('active');
 											$this.addClass('active');
+											syncActiveNavItem($this);
 
 										}
 
@@ -112,6 +131,8 @@
 							});
 
 					});
+
+				syncActiveNavItem($nav_a.filter('.active').first());
 
 		}
 
@@ -195,12 +216,32 @@
 	// Travel map. Add a country here with ISO code plus lon/lat to update it.
 		var travelCountries = [
 			{ code: 'IN', name: 'India', region: 'Asia', lon: 78.9, lat: 20.6 },
-			{ code: 'MY', name: 'Malaysia', region: 'Asia', lon: 102.0, lat: 4.2 },
+			{ code: 'SA', name: 'Saudi Arabia', region: 'Asia', lon: 45.1, lat: 23.9 },
 			{ code: 'GB', name: 'United Kingdom', region: 'Europe', lon: -3.4, lat: 55.4 },
-			{ code: 'NL', name: 'Netherlands', region: 'Europe', lon: 5.3, lat: 52.1 },
+			{ code: 'DE', name: 'Germany', region: 'Europe', lon: 10.4, lat: 51.2 },
+			{ code: 'PL', name: 'Poland', region: 'Europe', lon: 19.1, lat: 51.9 },
+			{ code: 'BE', name: 'Belgium', region: 'Europe', lon: 4.5, lat: 50.8 },
+			{ code: 'FR', name: 'France', region: 'Europe', lon: 2.2, lat: 46.2 },
+			{ code: 'PT', name: 'Portugal', region: 'Europe', lon: -8.2, lat: 39.4 },
+			{ code: 'IT', name: 'Italy', region: 'Europe', lon: 12.6, lat: 42.8 },
+			{ code: 'CH', name: 'Switzerland', region: 'Europe', lon: 8.2, lat: 46.8 },
+			{ code: 'AT', name: 'Austria', region: 'Europe', lon: 14.6, lat: 47.5 },
+			{ code: 'TH', name: 'Thailand', region: 'Asia', lon: 100.9, lat: 15.9 },
+			{ code: 'MY', name: 'Malaysia', region: 'Asia', lon: 102.0, lat: 4.2 },
+			{ code: 'VA', name: 'Vatican City', region: 'Europe', lon: 12.45, lat: 41.9 },
 			{ code: 'ES', name: 'Spain', region: 'Europe', lon: -3.7, lat: 40.4 },
-			{ code: 'CA', name: 'Canada', region: 'North America', lon: -106.3, lat: 56.1 },
-			{ code: 'US', name: 'United States', region: 'North America', lon: -98.6, lat: 39.8 }
+			{ code: 'NO', name: 'Norway', region: 'Europe', lon: 8.5, lat: 60.5 },
+			{ code: 'AD', name: 'Andorra', region: 'Europe', lon: 1.6, lat: 42.5 },
+			{ code: 'US', name: 'United States', region: 'North America', lon: -98.6, lat: 39.8 },
+			{ code: 'LK', name: 'Sri Lanka', region: 'Asia', lon: 80.7, lat: 7.9 },
+			{ code: 'AL', name: 'Albania', region: 'Europe', lon: 20.2, lat: 41.2 },
+			{ code: 'GR', name: 'Greece', region: 'Europe', lon: 21.8, lat: 39.1 },
+			{ code: 'CZ', name: 'Czechia', region: 'Europe', lon: 15.5, lat: 49.8 },
+			{ code: 'MC', name: 'Monaco', region: 'Europe', lon: 7.42, lat: 43.74 },
+			{ code: 'IE', name: 'Ireland', region: 'Europe', lon: -8.2, lat: 53.3 },
+			{ code: 'NL', name: 'Netherlands', region: 'Europe', lon: 5.3, lat: 52.1 },
+			{ code: 'NP', name: 'Nepal', region: 'Asia', lon: 84.1, lat: 28.4 },
+			{ code: 'CA', name: 'Canada', region: 'North America', lon: -106.3, lat: 56.1 }
 		];
 
 		var $travelMap = $('.travel-map[data-map="world"]');

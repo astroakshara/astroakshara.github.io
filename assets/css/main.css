@@ -4068,6 +4068,9 @@ input, select, textarea {
 		--panel-border: rgba(201, 125, 190, 0.35);
 		--map-land: #eaddef;
 		--map-marker: #b92f82;
+		--carousel-arrow-bg: rgba(28, 22, 34, 0.72);
+		--carousel-arrow-border: rgba(255, 255, 255, 0.78);
+		--carousel-arrow-text: #ffffff;
 	}
 
 	body.theme-light {
@@ -4084,6 +4087,9 @@ input, select, textarea {
 		--panel-border: rgba(138, 63, 142, 0.28);
 		--map-land: #eaddef;
 		--map-marker: #b92f82;
+		--carousel-arrow-bg: rgba(255, 255, 255, 0.94);
+		--carousel-arrow-border: #2a2233;
+		--carousel-arrow-text: #2a2233;
 	}
 
 	body.theme-dark {
@@ -4100,6 +4106,9 @@ input, select, textarea {
 		--panel-border: rgba(239, 194, 226, 0.24);
 		--map-land: #353246;
 		--map-marker: #ff8fc6;
+		--carousel-arrow-bg: rgba(28, 22, 34, 0.88);
+		--carousel-arrow-border: rgba(255, 255, 255, 0.78);
+		--carousel-arrow-text: #ffffff;
 	}
 
 	body,
@@ -4163,7 +4172,7 @@ input, select, textarea {
 	}
 
 	.hero-titleline {
-		white-space: nowrap;
+		white-space: normal;
 	}
 
 	.theme-toggle,
@@ -4172,19 +4181,20 @@ input, select, textarea {
 		align-items: center;
 		background: rgba(255, 255, 255, 0.14) !important;
 		border: 1px solid rgba(255, 255, 255, 0.68) !important;
-		border-radius: 999px;
+		border-radius: 8px;
 		box-shadow: 0 0.35em 1.2em rgba(0, 0, 0, 0.24) !important;
 		color: #ffffff !important;
 		display: inline-flex;
 		font-size: 1em;
-		height: 2.55em;
+		height: 2.15em;
 		justify-content: center;
 		line-height: 1;
+		min-width: 0 !important;
 		padding: 0;
 		position: fixed;
 		right: 1.25em;
 		top: 1.25em;
-		width: 2.55em;
+		width: 2.15em;
 		z-index: 10001;
 	}
 
@@ -4200,6 +4210,16 @@ input, select, textarea {
 
 	#nav {
 		background: var(--nav-bg);
+	}
+
+	body.theme-dark #nav,
+	body.theme-dark #nav.alt {
+		background: rgba(18, 16, 25, 0.98);
+	}
+
+	body.theme-dark #nav ul li a.active {
+		background-color: #f5ecff;
+		color: #1a1322 !important;
 	}
 
 	#nav ul {
@@ -4394,6 +4414,30 @@ input, select, textarea {
 		color: var(--button-text) !important;
 	}
 
+	#main input[type="submit"],
+	#main input[type="reset"],
+	#main input[type="button"],
+	#main button,
+	#main .button {
+		font-weight: 700 !important;
+	}
+
+	body.theme-light #main input[type="submit"],
+	body.theme-light #main input[type="reset"],
+	body.theme-light #main input[type="button"],
+	body.theme-light #main button,
+	body.theme-light #main .button {
+		color: #000000 !important;
+	}
+
+	body.theme-dark #main input[type="submit"],
+	body.theme-dark #main input[type="reset"],
+	body.theme-dark #main input[type="button"],
+	body.theme-dark #main button,
+	body.theme-dark #main .button {
+		color: #ffffff !important;
+	}
+
 	input[type="submit"]:hover,
 	input[type="reset"]:hover,
 	input[type="button"]:hover,
@@ -4477,20 +4521,21 @@ input, select, textarea {
 	.carousel-arrow:hover,
 	.carousel-arrow:active {
 		align-items: center;
-		background: rgba(28, 22, 34, 0.72) !important;
-		border: 1px solid rgba(255, 255, 255, 0.78) !important;
-		border-radius: 999px;
+		background: var(--carousel-arrow-bg) !important;
+		border: 1px solid var(--carousel-arrow-border) !important;
+		border-radius: 8px;
 		box-shadow: 0 0.35em 1em rgba(0, 0, 0, 0.28) !important;
-		color: #ffffff !important;
+		color: var(--carousel-arrow-text) !important;
 		display: flex;
-		height: 2.8em;
+		height: 2.45em;
 		justify-content: center;
 		line-height: 1;
+		min-width: 0 !important;
 		padding: 0;
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		width: 2.8em;
+		width: 2.45em;
 		z-index: 2;
 	}
 
@@ -4523,6 +4568,25 @@ input, select, textarea {
 		display: block;
 		margin-top: 2em;
 		padding: 1em;
+	}
+
+	#footer,
+	#footer p,
+	#footer li,
+	#footer h2,
+	#footer a,
+	#footer .copyright {
+		color: #ffffff !important;
+	}
+
+	#footer .button,
+	#footer .button.primary,
+	#footer input[type="submit"],
+	#footer input[type="reset"],
+	#footer input[type="button"],
+	#footer button {
+		color: #ffffff !important;
+		font-weight: 700 !important;
 	}
 
 	.world-map {
@@ -4608,7 +4672,7 @@ input, select, textarea {
 		}
 
 		#header p {
-			font-size: 0.4rem !important;
+			font-size: 0.78rem !important;
 			line-height: 1.45;
 			max-width: 100%;
 			margin-left: auto;
@@ -4616,7 +4680,7 @@ input, select, textarea {
 		}
 
 		.hero-titleline {
-			white-space: nowrap;
+			white-space: normal;
 		}
 
 		#nav {

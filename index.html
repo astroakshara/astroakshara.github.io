@@ -14,6 +14,7 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
+		<script>document.body.className = 'is-preload theme-' + (localStorage.getItem('theme') || 'dark');</script>
 		<div id="wrapper">
 			<header id="header" class="alt hero-header">
 				<button class="theme-toggle" type="button" aria-label="Switch to light mode"></button>
