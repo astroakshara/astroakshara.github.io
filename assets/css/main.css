@@ -245,7 +245,7 @@ input, select, textarea {
 	}
 
 	body:before {
-		background: linear-gradient(135deg, rgba(11, 17, 24, 0.94), rgba(46, 61, 78, 0.68));
+		background: linear-gradient(135deg, rgba(11, 17, 24, 0.68), rgba(46, 61, 78, 0.24));
 		content: '';
 		display: block;
 		height: 100%;
@@ -4121,7 +4121,7 @@ input, select, textarea {
 	body:before,
 	body.theme-light:before,
 	body.theme-dark:before {
-		background: linear-gradient(135deg, rgba(11, 17, 24, 0.94), rgba(46, 61, 78, 0.68));
+		background: linear-gradient(135deg, rgba(11, 17, 24, 0.68), rgba(46, 61, 78, 0.24));
 		content: '';
 		display: block;
 		height: 100%;
@@ -4600,7 +4600,19 @@ input, select, textarea {
 	.world-map .land {
 		fill: var(--map-land);
 		stroke: var(--panel-border);
-		stroke-width: 2;
+		stroke-width: 0.8;
+		vector-effect: non-scaling-stroke;
+		transition: fill 160ms ease;
+	}
+
+	.world-map .land.travelled {
+		fill: var(--map-marker);
+	}
+
+	.world-map .land:hover {
+		fill: var(--button-bg-hover);
+		stroke: var(--heading-color);
+		stroke-width: 1.4;
 	}
 
 	.travel-marker circle {
@@ -4727,3 +4739,275 @@ input, select, textarea {
 		}
 
 	}
+
+
+/* Compact news cards, thesis artwork, and editable portfolio placeholders. */
+.news-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	align-items: stretch;
+	text-align: left;
+}
+
+.news-card {
+	background: var(--card-bg);
+	border: 1px solid var(--panel-border);
+	border-radius: 8px;
+	box-shadow: 0 0.35em 1em rgba(0, 0, 0, 0.12);
+	min-width: 0;
+	padding: 1em 1.1em;
+}
+
+.news-card .icon {
+	display: inline-block;
+	font-size: 1.35em;
+	line-height: 1;
+	margin-bottom: 0.45em;
+}
+
+.news-card h3 {
+	font-size: 1.05em;
+	line-height: 1.3;
+	margin-bottom: 0.45em;
+}
+
+.news-card p {
+	font-size: 0.87em;
+	line-height: 1.45;
+	margin: 0 0 0.65em;
+}
+
+.news-card p:last-child {
+	margin-bottom: 0;
+}
+
+.cv-photo-placeholder,
+.paper-placeholder {
+	align-items: center;
+	background: linear-gradient(135deg, rgba(155, 135, 180, 0.24), rgba(90, 112, 145, 0.22));
+	border: 1px dashed var(--panel-border);
+	border-radius: 8px;
+	color: var(--text-color);
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1.15em;
+	min-height: 10em;
+	padding: 1em;
+	text-align: center;
+}
+
+.cv-photo-placeholder {
+	aspect-ratio: 4 / 3;
+}
+
+.thesis-layout {
+	align-items: center;
+	display: grid;
+	gap: 2em;
+	grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+}
+
+.thesis-copy p {
+	margin-bottom: 1.25em;
+}
+
+.thesis-art-grid {
+	align-items: center;
+	display: grid;
+	gap: 1em;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.thesis-art-grid img {
+	border: 1px solid var(--panel-border);
+	border-radius: 8px;
+	max-height: 18em;
+	object-fit: contain;
+	width: 100%;
+}
+
+.lead-author-grid .gallery-card {
+	min-width: 0;
+}
+
+.lead-author-grid .paper-placeholder {
+	aspect-ratio: 3 / 2;
+	margin-bottom: 1em;
+	min-height: 0;
+}
+
+.lead-author-grid h3 {
+	font-size: 1.05em;
+}
+
+@media screen and (max-width: 980px) {
+	.news-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.thesis-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media screen and (max-width: 736px) {
+	.news-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.news-card {
+		padding: 0.9em 1em;
+	}
+
+	.thesis-art-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.thesis-art-grid img {
+		max-height: 15em;
+	}
+}
+
+.media-grid {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.media-grid .gallery-card {
+	text-align: left;
+}
+
+.media-grid .media-preview {
+	margin-bottom: 1.1em;
+}
+
+.media-grid .media-preview img,
+.media-grid .media-preview video {
+	aspect-ratio: auto;
+	display: block;
+	height: auto;
+	max-height: 75vh;
+	object-fit: contain;
+	width: 100%;
+}
+
+.media-grid .reuse-credit {
+	font-size: 0.82em;
+	margin-bottom: 0;
+}
+
+
+.feature-panel {
+	background: var(--card-bg);
+	border: 1px solid var(--panel-border);
+	border-radius: 8px;
+	box-shadow: 0 0.45em 1.35em rgba(0, 0, 0, 0.14);
+	min-width: 0;
+	overflow: hidden;
+	padding: 1.5em;
+}
+
+.thesis-panel {
+	background-color: #17202a;
+	background-image: linear-gradient(135deg, rgba(12, 16, 24, 0.66), rgba(12, 16, 24, 0.42)), url("../../images/thesis-cover-bookmark.jpg");
+	background-position: center;
+	background-size: cover;
+	color: #ffffff;
+	text-align: left;
+}
+
+.thesis-panel h2,
+.thesis-panel p,
+.thesis-panel a {
+	color: #ffffff !important;
+}
+
+.thesis-panel .major p {
+	margin-bottom: 0.6em;
+}
+
+.thesis-panel-inner {
+	align-items: center;
+	display: grid;
+	gap: 1.25em;
+	grid-template-columns: minmax(0, 1fr) minmax(7em, 0.48fr);
+}
+
+.thesis-gallery {
+	aspect-ratio: 1;
+	display: grid;
+	gap: 0.45em;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-rows: repeat(2, minmax(0, 1fr));
+	min-width: 0;
+}
+
+.thesis-gallery img {
+	border: 1px solid rgba(255, 255, 255, 0.55);
+	border-radius: 8px;
+	box-shadow: 0 0.5em 1.2em rgba(0, 0, 0, 0.35);
+	height: 100%;
+	min-height: 0;
+	object-fit: cover;
+	width: 100%;
+}
+
+.thesis-credit {
+	font-size: 0.82em;
+	margin-bottom: 0;
+	opacity: 0.9;
+}
+
+@media screen and (max-width: 736px) {
+	.feature-panel {
+		padding: 1.15em;
+	}
+
+	.thesis-panel-inner {
+		grid-template-columns: minmax(0, 1fr) minmax(6em, 0.42fr);
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.thesis-panel-inner {
+		grid-template-columns: 1fr;
+	}
+
+	.thesis-gallery {
+		margin: 0 auto;
+		max-width: 18em;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 980px) {
+	#intro .spotlight .intro-images {
+		border: 0;
+		border-radius: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85em;
+		margin: 2em auto;
+		max-width: 24em;
+		padding: 0;
+		width: 75%;
+	}
+
+	#intro .spotlight .intro-images img {
+		border-radius: 8px;
+		height: auto;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	#intro .spotlight .intro-images {
+		max-width: 18em;
+		width: 75%;
+	}
+}
+.abc b {
+    display: none;
+}
+
+.abc span:nth-child(2) {
+    display: none;
+}

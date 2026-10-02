@@ -213,7 +213,7 @@
 			start();
 		});
 
-	// Travel map. Add a country here with ISO code plus lon/lat to update it.
+	// Travel map. Add countries to this list to highlight them on the full world map.
 		var travelCountries = [
 			{ code: 'IN', name: 'India', region: 'Asia', lon: 78.9, lat: 20.6 },
 			{ code: 'SA', name: 'Saudi Arabia', region: 'Asia', lon: 45.1, lat: 23.9 },
@@ -241,84 +241,41 @@
 			{ code: 'IE', name: 'Ireland', region: 'Europe', lon: -8.2, lat: 53.3 },
 			{ code: 'NL', name: 'Netherlands', region: 'Europe', lon: 5.3, lat: 52.1 },
 			{ code: 'NP', name: 'Nepal', region: 'Asia', lon: 84.1, lat: 28.4 },
+			{ code: 'FI', name: 'Finland', region: 'Europe', lon: 26.0, lat: 64.0 },
+			{ code: 'EE', name: 'Estonia', region: 'Europe', lon: 25.5, lat: 58.7 },
 			{ code: 'CA', name: 'Canada', region: 'North America', lon: -106.3, lat: 56.1 }
 		];
 
 		var $travelMap = $('.travel-map[data-map="world"]');
 
 		if ($travelMap.length) {
-			var cssVar = function(name, fallback) {
-				var value = window.getComputedStyle($body[0]).getPropertyValue(name).trim();
-				return value || fallback;
-			};
-
-			if (window.jsVectorMap) {
-				var travelledCodes = travelCountries.map(function(country) {
-						return country.code;
-					}),
-					travelledByCode = {};
-
-				$travelMap.css('min-height', '32em');
+			$.get('images/world-map.svg', function(markup) {
+				$travelMap.html(markup);
+				var $mapSvg = $travelMap.find('svg.world-map');
 
 				travelCountries.forEach(function(country) {
-					travelledByCode[country.code] = country;
-				});
+					var $shape = $mapSvg.find('.land[data-code="' + country.code + '"]');
 
-				new jsVectorMap({
-					selector: '.travel-map[data-map="world"]',
-					map: 'world',
-					backgroundColor: 'transparent',
-					selectedRegions: travelledCodes,
-					zoomButtons: true,
-					regionStyle: {
-						initial: {
-							fill: cssVar('--map-land', '#eaddef'),
-							fillOpacity: 1,
-							stroke: cssVar('--panel-border', 'rgba(138, 63, 142, 0.28)'),
-							strokeWidth: 0.5
-						},
-						hover: {
-							fill: cssVar('--button-bg-hover', '#f48bbf')
-						},
-						selected: {
-							fill: cssVar('--map-marker', '#b92f82')
-						},
-						selectedHover: {
-							fill: cssVar('--button-bg-hover', '#f48bbf')
-						}
-					},
-					onRegionTooltipShow: function(event, tooltip, code) {
-						if (travelledByCode[code])
-							tooltip.text(travelledByCode[code].name + ' - travelled');
+					if ($shape.length) {
+						$shape.addClass('travelled').find('title').text(country.name + ' - travelled');
+						return;
 					}
+
+					// Mark very small countries that are not drawn separately at this map scale.
+					var marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle'),
+						title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+					marker.setAttribute('class', 'land travelled country-marker');
+					marker.setAttribute('data-code', country.code);
+					marker.setAttribute('cx', (((country.lon + 180) / 360) * 1000).toFixed(2));
+					marker.setAttribute('cy', (((90 - country.lat) / 180) * 500).toFixed(2));
+					marker.setAttribute('r', '2.8');
+				title.textContent = country.name + ' - travelled';
+					marker.appendChild(title);
+					$mapSvg[0].appendChild(marker);
 				});
-
-				return;
-			}
-
-			var project = function(lon, lat) {
-				return {
-					x: ((lon + 180) / 360) * 1000,
-					y: ((90 - lat) / 180) * 500
-				};
-			};
-
-			var markers = travelCountries.map(function(country) {
-				var point = project(country.lon, country.lat);
-				return '<g class="travel-marker" tabindex="0"><circle cx="' + point.x.toFixed(1) + '" cy="' + point.y.toFixed(1) + '" r="8"></circle><text x="' + (point.x + 13).toFixed(1) + '" y="' + (point.y + 4).toFixed(1) + '">' + country.name + '</text></g>';
-			}).join('');
-
-			$travelMap.html(
-				'<svg class="world-map" viewBox="0 0 1000 500" role="img" aria-label="World map with visited countries highlighted">' +
-					'<path class="land" d="M91 168 L151 118 L239 126 L285 171 L260 236 L190 259 L112 230 Z" />' +
-					'<path class="land" d="M246 297 L313 312 L334 382 L303 454 L247 430 L222 355 Z" />' +
-					'<path class="land" d="M455 132 L531 96 L640 122 L681 183 L626 225 L516 213 L443 174 Z" />' +
-					'<path class="land" d="M498 222 L570 241 L606 330 L557 421 L502 370 L467 282 Z" />' +
-					'<path class="land" d="M638 167 L742 122 L878 152 L918 231 L843 275 L739 245 L655 214 Z" />' +
-					'<path class="land" d="M777 332 L867 327 L913 380 L881 429 L786 420 L743 370 Z" />' +
-					markers +
-				'</svg>'
-			);
+			}, 'text').fail(function() {
+				$travelMap.text('The world map could not be loaded.');
+			});
 		}
 
 })(jQuery);
