@@ -260,6 +260,16 @@ input, select, textarea {
 		background: linear-gradient(135deg, rgba(246, 241, 248, 0.72), rgba(245, 233, 244, 0.58));
 	}
 
+	#starfield {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		z-index: -1;
+	}
+
 	#header.alt {
 		min-height: 88vh;
 		display: flex;
@@ -5018,5 +5028,57 @@ input, select, textarea {
 @media screen and (max-width: 736px) {
 	#outside-work .outside-work-strip {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* Dark mode: bold text in an off-white so it stays readable */
+body.theme-dark strong,
+body.theme-dark b,
+body.theme-dark #main strong,
+body.theme-dark #main b {
+	color: #f3eef6;
+}
+
+/* Sub-page headers: "Akshara Viswanathan – Page title" */
+#header:not(.alt) h1 {
+	white-space: normal;
+}
+
+#header .site-name {
+	border-bottom: 0;
+	color: inherit;
+	text-decoration: none;
+}
+
+#header .site-name:hover {
+	color: #ffd6ec;
+}
+
+#header .site-sep {
+	opacity: 0.6;
+}
+
+@media screen and (max-width: 736px) {
+	#header .site-name {
+		display: block;
+		font-size: 0.6em;
+		font-weight: 400;
+		letter-spacing: 0.04em;
+		margin-bottom: 0.3em;
+		opacity: 0.85;
+	}
+
+	#header .site-sep {
+		display: none;
+	}
+}
+
+/* Mobile: theme toggle sits at the top of the page instead of floating
+   over the sticky menu bar and the text */
+@media screen and (max-width: 736px) {
+	.theme-toggle,
+	.theme-toggle:hover,
+	.theme-toggle:active {
+		position: absolute;
 	}
 }
